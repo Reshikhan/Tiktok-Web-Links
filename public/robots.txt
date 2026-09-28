@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rashidkhanreshii.com/sitemap.xml
+Sitemap: https://rashidkhanreshii.ai.studio/sitemap.xml

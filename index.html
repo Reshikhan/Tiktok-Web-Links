@@ -990,41 +990,99 @@
 
     // Button styles per link (kept separate so the LINKS array above stays exactly as given)
     const LINK_STYLE = {
-      "Blackmagic LUTs Download": { cat: "download", tag: "Get" },
-      "Blackmagic Camera for Android": { cat: "download", tag: "Get" },
-      "TikTok Video \u2013 Quality Tutorial": { cat: "tutorial", tag: "Watch" },
-      "Maleeha Seller": { cat: "community", tag: "Join" },
-      "Maheen Seller": { cat: "community", tag: "Join" },
-      "TikTok": { cat: "social", tag: "Follow" }
+      "Blackmagic LUTs Download": { cat: "download", tag: "Get", key: "reshii_luts" },
+      "Blackmagic Camera for Android": { cat: "download", tag: "Get", key: "reshii_bmcam_android" },
+      "TikTok Video \u2013 Quality Tutorial": { cat: "tutorial", tag: "Watch", key: "reshii_quality_tutorial" },
+      "Maleeha Seller": { cat: "community", tag: "Join", key: "reshii_maleeha" },
+      "Maheen Seller": { cat: "community", tag: "Join", key: "reshii_maheen" },
+      "TikTok": { cat: "social", tag: "Follow", key: "reshii_tiktok_follow" }
     };
 
-    // Simple, privacy-friendly click counter stored only in this visitor's browser.
-    // There is no server on this static site, so counts are per-device by design.
+    // Globally synced click counter: the same live count on every device.
+    // Counts are stored by a free counter service (no signup); localStorage
+    // is only a fallback so the numbers still show if the service is down.
+    const COUNTER_API = 'https://countapi.mileshilliard.com/api/v1';
     const CLICK_COUNT_KEY = 'reshii_link_clicks_v1';
 
-    function getClickCounts() {
+    function formatClicks(n) {
+      return n + (n === 1 ? ' click' : ' clicks');
+    }
+
+    function setClickDisplay(id, n) {
+      const sel = '.click-num[data-click-for="' + CSS.escape(id) + '"]';
+      document.querySelectorAll(sel).forEach(el => {
+        el.textContent = formatClicks(n);
+      });
+    }
+
+    function getLocalCounts() {
       try {
         return JSON.parse(localStorage.getItem(CLICK_COUNT_KEY) || '{}');
       } catch (e) { return {}; }
     }
 
-    function recordClick(id) {
-      if (!id) return;
+    function saveLocalCount(id, n) {
       try {
-        const counts = getClickCounts();
-        counts[id] = (counts[id] || 0) + 1;
+        const counts = getLocalCounts();
+        counts[id] = n;
         localStorage.setItem(CLICK_COUNT_KEY, JSON.stringify(counts));
       } catch (e) {}
-      updateClickDisplays();
     }
 
-    function updateClickDisplays() {
-      const counts = getClickCounts();
-      document.querySelectorAll('.click-num').forEach(el => {
-        const cid = el.getAttribute('data-click-for');
-        const n = counts[cid] || 0;
-        el.textContent = n + (n === 1 ? ' click' : ' clicks');
+    async function fetchCount(key) {
+      try {
+        const res = await fetch(COUNTER_API + '/get/' + encodeURIComponent(key), { cache: 'no-store' });
+        if (!res.ok) return null;
+        const data = await res.json();
+        return typeof data.value === 'number' ? data.value : 0;
+      } catch (e) { return null; }
+    }
+
+    async function hitCount(key) {
+      try {
+        const res = await fetch(COUNTER_API + '/hit/' + encodeURIComponent(key), { cache: 'no-store', keepalive: true });
+        if (!res.ok) return null;
+        const data = await res.json();
+        return typeof data.value === 'number' ? data.value : null;
+      } catch (e) { return null; }
+    }
+
+    // Load the live global count for every link on page open
+    async function loadClickCounts() {
+      const jobs = LINKS.map(async (l, index) => {
+        const id = `${l.title}-${index}`;
+        const st = LINK_STYLE[l.title];
+        const key = st && st.key;
+        if (!key) return;
+        const n = await fetchCount(key);
+        if (n !== null) {
+          setClickDisplay(id, n);
+          saveLocalCount(id, n);
+        } else {
+          setClickDisplay(id, getLocalCounts()[id] || 0);
+        }
       });
+      await Promise.all(jobs);
+    }
+
+    // Increment the global count when a link is tapped
+    async function recordClick(id, countKey) {
+      if (!id) return;
+      if (!countKey) {
+        const n = (getLocalCounts()[id] || 0) + 1;
+        saveLocalCount(id, n);
+        setClickDisplay(id, n);
+        return;
+      }
+      const n = await hitCount(countKey);
+      if (n !== null) {
+        setClickDisplay(id, n);
+        saveLocalCount(id, n);
+      } else {
+        const fallback = (getLocalCounts()[id] || 0) + 1;
+        saveLocalCount(id, fallback);
+        setClickDisplay(id, fallback);
+      }
     }
 
     const ICONS = {
@@ -1057,7 +1115,7 @@
         const id = `${l.title}-${index}`;
         const st = LINK_STYLE[l.title] || { cat: "social", tag: "Follow" };
         const card = `
-        <a class="link-card glass cat-${st.cat}" href="${l.url}" target="_blank" rel="noopener" data-link-id="${id}" style="animation-delay:${delay.toFixed(2)}s">
+        <a class="link-card glass cat-${st.cat}" href="${l.url}" target="_blank" rel="noopener" data-link-id="${id}" data-count-key="${st.key || ''}" style="animation-delay:${delay.toFixed(2)}s">
           <div class="link-thumb">${l.emoji || '\U0001F517'}</div>
           <div class="link-body">
             <div class="link-title">${l.title} ${l.verified ? '<span class="badge">\u2705</span>' : ''}</div>
@@ -1073,7 +1131,7 @@
 
       el.querySelectorAll('.link-card').forEach(card => {
         card.addEventListener('click', () => {
-          recordClick(card.dataset.linkId);
+          recordClick(card.dataset.linkId, card.dataset.countKey);
         });
       });
     }
@@ -1107,7 +1165,7 @@
     // Initial render
     renderSocials();
     renderLinks();
-    updateClickDisplays();
+    loadClickCounts();
     setupThemeToggle();
 
     // Domain consistency: adapt canonical and og:url if visited on rashidkhanreshii.ai.studio or rashidkhanreshii.com

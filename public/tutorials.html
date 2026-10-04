@@ -132,7 +132,7 @@
       var btn = document.getElementById('themeFab');
       var label = btn.querySelector('.theme-fab-label');
       var saved = localStorage.getItem('reshii-theme') || localStorage.getItem('theme');
-      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      if (saved !== 'light') {
         document.body.classList.add('dark-theme');
       }
       function sync() {

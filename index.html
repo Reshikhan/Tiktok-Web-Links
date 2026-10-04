@@ -688,6 +688,24 @@
       text-align: center;
     }
 
+    .link-stats {
+      margin-top: 5px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .link-stats .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      flex-shrink: 0;
+    }
+
     /* ---------- link categories ---------- */
     .link-group-title {
       font-size: 12px;
@@ -981,13 +999,29 @@
     // There is no server on this static site, so counts are per-device by design.
     const CLICK_COUNT_KEY = 'reshii_link_clicks_v1';
 
+    function getClickCounts() {
+      try {
+        return JSON.parse(localStorage.getItem(CLICK_COUNT_KEY) || '{}');
+      } catch (e) { return {}; }
+    }
+
     function recordClick(id) {
       if (!id) return;
       try {
-        const counts = JSON.parse(localStorage.getItem(CLICK_COUNT_KEY) || '{}');
+        const counts = getClickCounts();
         counts[id] = (counts[id] || 0) + 1;
         localStorage.setItem(CLICK_COUNT_KEY, JSON.stringify(counts));
       } catch (e) {}
+      updateClickDisplays();
+    }
+
+    function updateClickDisplays() {
+      const counts = getClickCounts();
+      document.querySelectorAll('.click-num').forEach(el => {
+        const cid = el.getAttribute('data-click-for');
+        const n = counts[cid] || 0;
+        el.textContent = n + (n === 1 ? ' click' : ' clicks');
+      });
     }
 
     function renderSocials() {
@@ -1024,6 +1058,7 @@
             <div class="link-body">
               <div class="link-title">${l.title} ${l.verified ? '<span class="badge">✅</span>' : ''}</div>
               <div class="link-sub">${l.sub}</div>
+              <div class="link-stats"><span class="dot"></span><span class="click-num" data-click-for="${id}">0 clicks</span></div>
             </div>
             <span class="cat-tag">${g.tag}</span>
             <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
@@ -1046,9 +1081,9 @@
       const button = document.getElementById('themeToggle');
       const label = button.querySelector('.theme-label');
       const savedTheme = localStorage.getItem('reshii-theme') || localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      // Dark is the default look; stay light only if the user chose light before.
+      if (savedTheme !== 'light') {
         document.body.classList.add('dark-theme');
       }
 
@@ -1071,6 +1106,7 @@
     // Initial render
     renderSocials();
     renderLinks();
+    updateClickDisplays();
     setupThemeToggle();
 
     // Domain consistency: adapt canonical and og:url if visited on rashidkhanreshii.ai.studio or rashidkhanreshii.com

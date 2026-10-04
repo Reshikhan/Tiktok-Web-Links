@@ -980,20 +980,23 @@
     ];
 
     const LINKS = [
-      { title: "Blackmagic LUTs Download", sub: "Free color grading presets", emoji: "🎨", verified: true, cat: "download", url: "https://drive.google.com/drive/folders/14dPdzWbCE6e81RipKRMI2DQ6JpflyB7X" },
-      { title: "Blackmagic Camera for Android", sub: "App download", emoji: "📱", verified: true, cat: "download", url: "https://blackmagic-camera.en.softonic.com/android" },
-      { title: "TikTok Video – Quality Tutorial", sub: "Watch on TikTok", emoji: "🎥", verified: true, cat: "tutorial", url: "https://www.tiktok.com/@reshitut/video/7683507679649664278?is_from_webapp=1&sender_device=pc" },
-      { title: "Maleeha Seller", sub: "Join for PAID — WhatsApp community, free to join", emoji: "💬", verified: false, cat: "community", url: "https://chat.whatsapp.com/IUdt84vlK2IEiwH0NKEzEU?s=cl&p=a&mlu=4&ilr=4" },
-      { title: "Maheen Seller", sub: "Join for paid CapCut Pro accounts", emoji: "✂️", verified: true, cat: "community", url: "https://chat.whatsapp.com/CMde24mgk9V7DoTfxFKkAm?s=cl&p=a&mlu=4&ilr=4" },
-      { title: "TikTok", sub: "Follow my page", emoji: "🎵", verified: false, cat: "social", url: "https://www.tiktok.com/@rashidkhanreshii?_r=1&_t=ZN-99Ytlh8edHy" }
+      { title: "Blackmagic LUTs Download", sub: "Free color grading presets", emoji: "🎨", verified: true, url: "https://drive.google.com/drive/folders/14dPdzWbCE6e81RipKRMI2DQ6JpflyB7X" },
+      { title: "Blackmagic Camera for Android", sub: "App download", emoji: "📱", verified: true, url: "https://blackmagic-camera.en.softonic.com/android" },
+      { title: "TikTok Video – Quality Tutorial", sub: "Watch on TikTok", emoji: "🎥", verified: true, url: "https://www.tiktok.com/@reshitut/video/7683507679649664278?is_from_webapp=1&sender_device=pc" },
+      { title: "Maleeha Seller", sub: "Join for PAID — WhatsApp community, free to join", emoji: "💬", verified: false, url: "https://chat.whatsapp.com/IUdt84vlK2IEiwH0NKEzEU?s=cl&p=a&mlu=4&ilr=4" },
+      { title: "Maheen Seller", sub: "Join for paid CapCut Pro accounts", emoji: "✂️", verified: true, url: "https://chat.whatsapp.com/CMde24mgk9V7DoTfxFKkAm?s=cl&p=a&mlu=4&ilr=4" },
+      { title: "TikTok", sub: "Follow my page", emoji: "🎵", verified: false, url: "https://www.tiktok.com/@rashidkhanreshii?_r=1&_t=ZN-99Ytlh8edHy" }
     ];
 
-    const LINK_GROUPS = [
-      { id: "download", heading: "⬇️ Downloads", tag: "Get" },
-      { id: "tutorial", heading: "🎓 Tutorials", tag: "Watch" },
-      { id: "community", heading: "💬 Community", tag: "Join" },
-      { id: "social", heading: "✨ Follow Me", tag: "Follow" }
-    ];
+    // Button styles per link (kept separate so the LINKS array above stays exactly as given)
+    const LINK_STYLE = {
+      "Blackmagic LUTs Download": { cat: "download", tag: "Get" },
+      "Blackmagic Camera for Android": { cat: "download", tag: "Get" },
+      "TikTok Video \u2013 Quality Tutorial": { cat: "tutorial", tag: "Watch" },
+      "Maleeha Seller": { cat: "community", tag: "Join" },
+      "Maheen Seller": { cat: "community", tag: "Join" },
+      "TikTok": { cat: "social", tag: "Follow" }
+    };
 
     // Simple, privacy-friendly click counter stored only in this visitor's browser.
     // There is no server on this static site, so counts are per-device by design.
@@ -1024,6 +1027,13 @@
       });
     }
 
+    const ICONS = {
+      instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>',
+      tiktok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82c-.9-.63-1.47-1.62-1.6-2.72h-2.98v13.3c0 1.4-1.13 2.53-2.53 2.53a2.53 2.53 0 0 1 0-5.06c.24 0 .47.03.69.1V10.9a5.53 5.53 0 0 0-.69-.04A5.53 5.53 0 1 0 15.02 16.4V9.28a6.6 6.6 0 0 0 3.9 1.26V7.56a3.9 3.9 0 0 1-2.32-1.74z"/></svg>',
+      mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>',
+      snapchat: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c3.3 0 5.2 2.2 5.3 5 0 .8 0 1.7-.05 2.4.3.15.7.2 1.1.15.5-.05.85.4.55.85-.3.45-1 .95-1 .95s.4.55.05.95c-.3.35-.9.4-1.15.55-.2.15-.15.6-.6.85-.5.3-1.35.1-1.9.35-.5.25-.7.85-1.5 1-.45.1-.9-.15-1.8-.15s-1.35.25-1.8.15c-.8-.15-1-.75-1.5-1-.55-.25-1.4-.05-1.9-.35-.45-.25-.4-.7-.6-.85-.25-.15-.85-.2-1.15-.55-.35-.4.05-.95.05-.95s-.7-.5-1-.95c-.3-.45.05-.9.55-.85.4.05.8 0 1.1-.15C6.7 9.7 6.7 8.8 6.7 8c.1-2.8 2-5 5.3-5z"/></svg>'
+    };
+
     function renderSocials() {
       const el = document.getElementById('socials');
       el.innerHTML = SOCIALS.map(s => `
@@ -1042,37 +1052,28 @@
 
     function renderLinks() {
       const el = document.getElementById('links');
-      let html = '';
       let delay = 0.20;
-      LINK_GROUPS.forEach(g => {
-        const items = LINKS
-          .map((l, index) => ({ ...l, index }))
-          .filter(l => (l.cat || 'social') === g.id);
-        if (!items.length) return;
-        html += `<h3 class="link-group-title">${g.heading}</h3>`;
-        html += items.map(l => {
-          const id = `${l.title}-${l.index}`;
-          const card = `
-          <a class="link-card glass cat-${g.id}" href="${l.url}" target="_blank" rel="noopener" data-link-id="${id}" style="animation-delay:${delay.toFixed(2)}s">
-            <div class="link-thumb">${l.emoji || '🔗'}</div>
-            <div class="link-body">
-              <div class="link-title">${l.title} ${l.verified ? '<span class="badge">✅</span>' : ''}</div>
-              <div class="link-sub">${l.sub}</div>
-              <div class="link-stats"><span class="dot"></span><span class="click-num" data-click-for="${id}">0 clicks</span></div>
-            </div>
-            <span class="cat-tag">${g.tag}</span>
-            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
-          </a>`;
-          delay += 0.05;
-          return card;
-        }).join('');
-      });
-      el.innerHTML = html;
+      el.innerHTML = LINKS.map((l, index) => {
+        const id = `${l.title}-${index}`;
+        const st = LINK_STYLE[l.title] || { cat: "social", tag: "Follow" };
+        const card = `
+        <a class="link-card glass cat-${st.cat}" href="${l.url}" target="_blank" rel="noopener" data-link-id="${id}" style="animation-delay:${delay.toFixed(2)}s">
+          <div class="link-thumb">${l.emoji || '\U0001F517'}</div>
+          <div class="link-body">
+            <div class="link-title">${l.title} ${l.verified ? '<span class="badge">\u2705</span>' : ''}</div>
+            <div class="link-sub">${l.sub}</div>
+            <div class="link-stats"><span class="dot"></span><span class="click-num" data-click-for="${id}">0 clicks</span></div>
+          </div>
+          <span class="cat-tag">${st.tag}</span>
+          <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+        </a>`;
+        delay += 0.05;
+        return card;
+      }).join('');
 
       el.querySelectorAll('.link-card').forEach(card => {
         card.addEventListener('click', () => {
-          const id = card.dataset.linkId;
-          recordClick(id);
+          recordClick(card.dataset.linkId);
         });
       });
     }

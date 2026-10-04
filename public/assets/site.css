@@ -2,6 +2,21 @@
    Matches the glassmorphism theme of the homepage. */
 
 :root {
+  color-scheme: light;
+  --page-background: #edf1f8;
+  --background-gradient: radial-gradient(ellipse at 50% 0%, #ffffff 0%, #eef3fc 55%, #e0e8f6 100%);
+  --glass-fill: rgba(255, 255, 255, 0.55);
+  --glass-fill-strong: rgba(255, 255, 255, 0.88);
+  --glass-border-soft: rgba(170, 188, 220, 0.35);
+  --text-primary: #1b2436;
+  --text-secondary: rgba(27, 36, 54, 0.62);
+  --accent: #4f7cff;
+  --radius-lg: 26px;
+  --radius-md: 20px;
+  --radius-full: 999px;
+}
+
+body.dark-theme {
   color-scheme: dark;
   --page-background: #0a0a14;
   --background-gradient: radial-gradient(ellipse at 50% 0%, #171730 0%, #0a0a14 60%);
@@ -11,10 +26,44 @@
   --text-primary: rgba(255, 255, 255, 0.96);
   --text-secondary: rgba(255, 255, 255, 0.62);
   --accent: #7dd3fc;
-  --radius-lg: 26px;
-  --radius-md: 20px;
-  --radius-full: 999px;
 }
+
+body:not(.dark-theme) .glass {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 12px 32px rgba(120, 142, 185, 0.16);
+}
+
+body:not(.dark-theme) .orb { opacity: 0.35; }
+body:not(.dark-theme) .orb1 { background: radial-gradient(circle at 30% 30%, #a5b8f5, transparent 70%); }
+body:not(.dark-theme) .orb2 { background: radial-gradient(circle at 60% 40%, #f5b8d4, transparent 70%); }
+body:not(.dark-theme) .orb3 { background: radial-gradient(circle at 50% 50%, #a8e6f5, transparent 70%); }
+
+/* floating theme toggle */
+.theme-fab {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--glass-border-soft);
+  background: var(--glass-fill-strong);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(120, 142, 185, 0.25);
+}
+.theme-fab svg { width: 17px; height: 17px; }
+.theme-fab .moon-icon { display: none; }
+body.dark-theme .theme-fab .sun-icon { display: none; }
+body.dark-theme .theme-fab .moon-icon { display: block; }
 
 * { box-sizing: border-box; }
 

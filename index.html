@@ -101,6 +101,22 @@
 
   <style>
     :root {
+      color-scheme: light;
+      --page-background: #edf1f8;
+      --background-gradient: radial-gradient(ellipse at 50% 0%, #ffffff 0%, #eef3fc 55%, #e0e8f6 100%);
+      --glass-fill: rgba(255, 255, 255, 0.55);
+      --glass-fill-strong: rgba(255, 255, 255, 0.88);
+      --glass-border: rgba(255, 255, 255, 0.85);
+      --glass-border-soft: rgba(170, 188, 220, 0.35);
+      --text-primary: #1b2436;
+      --text-secondary: rgba(27, 36, 54, 0.62);
+      --accent: #4f7cff;
+      --radius-lg: 26px;
+      --radius-md: 20px;
+      --radius-full: 999px;
+    }
+
+    body.dark-theme {
       color-scheme: dark;
       --page-background: #0a0a14;
       --background-gradient: radial-gradient(ellipse at 50% 0%, #171730 0%, #0a0a14 60%);
@@ -111,22 +127,30 @@
       --text-primary: rgba(255, 255, 255, 0.96);
       --text-secondary: rgba(255, 255, 255, 0.62);
       --accent: #7dd3fc;
-      --radius-lg: 26px;
-      --radius-md: 20px;
-      --radius-full: 999px;
     }
 
-    body.light-theme {
-      color-scheme: light;
-      --page-background: #f4f7fb;
-      --background-gradient: radial-gradient(ellipse at 50% 0%, #ffffff 0%, #e8eef7 70%);
-      --glass-fill: rgba(255, 255, 255, 0.58);
-      --glass-fill-strong: rgba(255, 255, 255, 0.82);
-      --glass-border: rgba(15, 23, 42, 0.18);
-      --glass-border-soft: rgba(15, 23, 42, 0.10);
-      --text-primary: #172033;
-      --text-secondary: rgba(23, 32, 51, 0.62);
-      --accent: #2563eb;
+    /* soft light-mode glass + orbs */
+    body:not(.dark-theme) .glass {
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.35),
+        0 12px 32px rgba(120, 142, 185, 0.16);
+    }
+
+    body:not(.dark-theme) .orb {
+      opacity: 0.35;
+    }
+
+    body:not(.dark-theme) .orb1 {
+      background: radial-gradient(circle at 30% 30%, #a5b8f5, transparent 70%);
+    }
+
+    body:not(.dark-theme) .orb2 {
+      background: radial-gradient(circle at 60% 40%, #f5b8d4, transparent 70%);
+    }
+
+    body:not(.dark-theme) .orb3 {
+      background: radial-gradient(circle at 50% 50%, #a8e6f5, transparent 70%);
     }
 
     * {
@@ -276,14 +300,16 @@
 
     .theme-toggle {
       align-self: flex-end;
-      width: 44px;
-      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
       border: 1px solid var(--glass-border-soft);
       border-radius: var(--radius-full);
       color: var(--text-primary);
+      font-size: 13px;
+      font-weight: 600;
       cursor: pointer;
-      display: grid;
-      place-items: center;
       margin-bottom: 18px;
       transition: transform 0.25s, background 0.25s;
     }
@@ -301,15 +327,19 @@
       height: 19px;
     }
 
+    .theme-toggle .sun-icon {
+      display: block;
+    }
+
     .theme-toggle .moon-icon {
       display: none;
     }
 
-    body.light-theme .theme-toggle .sun-icon {
+    body.dark-theme .theme-toggle .sun-icon {
       display: none;
     }
 
-    body.light-theme .theme-toggle .moon-icon {
+    body.dark-theme .theme-toggle .moon-icon {
       display: block;
     }
 
@@ -658,38 +688,75 @@
       text-align: center;
     }
 
-    /* stagger the link cards */
-    .links .link-card:nth-child(1) {
-      animation-delay: 0.20s;
+    /* ---------- link categories ---------- */
+    .link-group-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin: 18px 4px 2px;
+      text-align: left;
+      width: 100%;
     }
 
-    .links .link-card:nth-child(2) {
-      animation-delay: 0.25s;
+    .link-group-title:first-child {
+      margin-top: 0;
     }
 
-    .links .link-card:nth-child(3) {
-      animation-delay: 0.30s;
+    .cat-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: var(--radius-full);
+      flex-shrink: 0;
+      color: #fff;
     }
 
-    .links .link-card:nth-child(4) {
-      animation-delay: 0.35s;
+    .link-card.cat-download {
+      background: linear-gradient(135deg, rgba(79, 124, 255, 0.16), var(--glass-fill));
+      border: 1px solid rgba(79, 124, 255, 0.45);
     }
 
-    .links .link-card:nth-child(5) {
-      animation-delay: 0.40s;
+    .link-card.cat-download .cat-tag { background: linear-gradient(135deg, #4f7cff, #7c5cff); }
+
+    .link-card.cat-tutorial {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.14), var(--glass-fill));
+      border: 1px solid rgba(168, 85, 247, 0.4);
     }
 
-    .links .link-card:nth-child(6) {
-      animation-delay: 0.45s;
+    .link-card.cat-tutorial .cat-tag { background: linear-gradient(135deg, #a855f7, #ec4899); }
+
+    .link-card.cat-community {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.14), var(--glass-fill));
+      border: 1px solid rgba(34, 197, 94, 0.4);
     }
 
-    .links .link-card:nth-child(7) {
-      animation-delay: 0.50s;
+    .link-card.cat-community .cat-tag { background: linear-gradient(135deg, #22c55e, #16a34a); }
+
+    .link-card.cat-social .cat-tag { background: rgba(120, 135, 165, 0.85); }
+
+    body.dark-theme .link-card.cat-download {
+      background: linear-gradient(135deg, rgba(79, 124, 255, 0.22), var(--glass-fill));
     }
 
-    .links .link-card:nth-child(8) {
-      animation-delay: 0.55s;
+    body.dark-theme .link-card.cat-tutorial {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), var(--glass-fill));
     }
+
+    body.dark-theme .link-card.cat-community {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.18), var(--glass-fill));
+    }
+
+
+
+
+
+
+
+
 
     /* ---------- About Section (SEO & Brand) ---------- */
     .about-card {
@@ -764,8 +831,12 @@
       white-space: nowrap;
     }
 
-    body.light-theme .about-tag {
-      background: rgba(0, 0, 0, 0.05);
+    .about-tag {
+      background: rgba(27, 36, 54, 0.06);
+    }
+
+    body.dark-theme .about-tag {
+      background: rgba(255, 255, 255, 0.08);
     }
 
     a:focus-visible,
@@ -800,7 +871,7 @@
       <a href="/blackmagic-cam.html" class="nav-link">Blackmagic Cam</a>
     </nav>
 
-    <button class="theme-toggle glass" id="themeToggle" type="button" aria-label="Switch to light theme"
+    <button class="theme-toggle glass" id="themeToggle" type="button" aria-label="Switch to dark theme"
       aria-pressed="false">
       <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
         <circle cx="12" cy="12" r="4" />
@@ -811,6 +882,7 @@
         aria-hidden="true">
         <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5z" />
       </svg>
+      <span class="theme-label">Dark</span>
     </button>
 
     <div class="avatar-wrap">
@@ -890,12 +962,19 @@
     ];
 
     const LINKS = [
-      { title: "Blackmagic LUTs Download", sub: "Free color grading presets", emoji: "🎨", verified: true, url: "https://drive.google.com/drive/folders/14dPdzWbCE6e81RipKRMI2DQ6JpflyB7X" },
-      { title: "Blackmagic Camera for Android", sub: "App download", emoji: "📱", verified: true, url: "https://blackmagic-camera.en.softonic.com/android" },
-      { title: "TikTok Video – Quality Tutorial", sub: "Watch on TikTok", emoji: "🎥", verified: true, url: "https://www.tiktok.com/@reshitut/video/7683507679649664278?is_from_webapp=1&sender_device=pc" },
-      { title: "Maleeha Seller", sub: "Join for PAID — WhatsApp community, free to join", emoji: "💬", verified: false, url: "https://chat.whatsapp.com/IUdt84vlK2IEiwH0NKEzEU?s=cl&p=a&mlu=4&ilr=4" },
-      { title: "Maheen Seller", sub: "Join for paid CapCut Pro accounts", emoji: "✂️", verified: true, url: "https://chat.whatsapp.com/CMde24mgk9V7DoTfxFKkAm?s=cl&p=a&mlu=4&ilr=4" },
-      { title: "TikTok", sub: "Follow my page", emoji: "🎵", verified: false, url: "https://www.tiktok.com/@rashidkhanreshii?_r=1&_t=ZN-99Ytlh8edHy" }
+      { title: "Blackmagic LUTs Download", sub: "Free color grading presets", emoji: "🎨", verified: true, cat: "download", url: "https://drive.google.com/drive/folders/14dPdzWbCE6e81RipKRMI2DQ6JpflyB7X" },
+      { title: "Blackmagic Camera for Android", sub: "App download", emoji: "📱", verified: true, cat: "download", url: "https://blackmagic-camera.en.softonic.com/android" },
+      { title: "TikTok Video – Quality Tutorial", sub: "Watch on TikTok", emoji: "🎥", verified: true, cat: "tutorial", url: "https://www.tiktok.com/@reshitut/video/7683507679649664278?is_from_webapp=1&sender_device=pc" },
+      { title: "Maleeha Seller", sub: "Join for PAID — WhatsApp community, free to join", emoji: "💬", verified: false, cat: "community", url: "https://chat.whatsapp.com/IUdt84vlK2IEiwH0NKEzEU?s=cl&p=a&mlu=4&ilr=4" },
+      { title: "Maheen Seller", sub: "Join for paid CapCut Pro accounts", emoji: "✂️", verified: true, cat: "community", url: "https://chat.whatsapp.com/CMde24mgk9V7DoTfxFKkAm?s=cl&p=a&mlu=4&ilr=4" },
+      { title: "TikTok", sub: "Follow my page", emoji: "🎵", verified: false, cat: "social", url: "https://www.tiktok.com/@rashidkhanreshii?_r=1&_t=ZN-99Ytlh8edHy" }
+    ];
+
+    const LINK_GROUPS = [
+      { id: "download", heading: "⬇️ Downloads", tag: "Get" },
+      { id: "tutorial", heading: "🎓 Tutorials", tag: "Watch" },
+      { id: "community", heading: "💬 Community", tag: "Join" },
+      { id: "social", heading: "✨ Follow Me", tag: "Follow" }
     ];
 
     // Simple, privacy-friendly click counter stored only in this visitor's browser.
@@ -929,19 +1008,31 @@
 
     function renderLinks() {
       const el = document.getElementById('links');
-      el.innerHTML = LINKS.map((l, index) => {
-        const id = `${l.title}-${index}`;
-        return `
-        <a class="link-card glass" href="${l.url}" target="_blank" rel="noopener" data-link-id="${id}">
-          <div class="link-thumb">${l.emoji || '🔗'}</div>
-          <div class="link-body">
-            <div class="link-title">${l.title} ${l.verified ? '<span class="badge">✅</span>' : ''}</div>
-            <div class="link-sub">${l.sub}</div>
-          </div>
-          <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
-        </a>
-      `;
-      }).join('');
+      let html = '';
+      let delay = 0.20;
+      LINK_GROUPS.forEach(g => {
+        const items = LINKS
+          .map((l, index) => ({ ...l, index }))
+          .filter(l => (l.cat || 'social') === g.id);
+        if (!items.length) return;
+        html += `<h3 class="link-group-title">${g.heading}</h3>`;
+        html += items.map(l => {
+          const id = `${l.title}-${l.index}`;
+          const card = `
+          <a class="link-card glass cat-${g.id}" href="${l.url}" target="_blank" rel="noopener" data-link-id="${id}" style="animation-delay:${delay.toFixed(2)}s">
+            <div class="link-thumb">${l.emoji || '🔗'}</div>
+            <div class="link-body">
+              <div class="link-title">${l.title} ${l.verified ? '<span class="badge">✅</span>' : ''}</div>
+              <div class="link-sub">${l.sub}</div>
+            </div>
+            <span class="cat-tag">${g.tag}</span>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </a>`;
+          delay += 0.05;
+          return card;
+        }).join('');
+      });
+      el.innerHTML = html;
 
       el.querySelectorAll('.link-card').forEach(card => {
         card.addEventListener('click', () => {
@@ -953,22 +1044,24 @@
 
     function setupThemeToggle() {
       const button = document.getElementById('themeToggle');
-      const savedTheme = localStorage.getItem('theme');
-      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      const label = button.querySelector('.theme-label');
+      const savedTheme = localStorage.getItem('reshii-theme') || localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-      if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
-        document.body.classList.add('light-theme');
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.body.classList.add('dark-theme');
       }
 
       function updateThemeLabel() {
-        const isLight = document.body.classList.contains('light-theme');
-        button.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
-        button.setAttribute('aria-pressed', String(isLight));
+        const isDark = document.body.classList.contains('dark-theme');
+        button.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+        button.setAttribute('aria-pressed', String(isDark));
+        if (label) label.textContent = isDark ? 'Light' : 'Dark';
       }
 
       button.addEventListener('click', () => {
-        const isLight = document.body.classList.toggle('light-theme');
-        localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        const isDark = document.body.classList.toggle('dark-theme');
+        localStorage.setItem('reshii-theme', isDark ? 'dark' : 'light');
         updateThemeLabel();
       });
 

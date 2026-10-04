@@ -106,5 +106,32 @@
     <footer>@rashidkhanreshii All Rights Reserved &middot; <a href="/privacy.html" style="text-decoration: underline;">Privacy Policy</a><br />
       Contact: <a href="mailto:rashidkhanreshii@gmail.com">rashidkhanreshii@gmail.com</a></footer>
   </div>
+
+  <button class="theme-fab" id="themeFab" type="button" aria-label="Switch to dark theme">
+    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5 8.5 8.5 0 1 0 20.5 14.5z"/></svg>
+    <span class="theme-fab-label">Dark</span>
+  </button>
+  <script>
+    (function () {
+      var btn = document.getElementById('themeFab');
+      var label = btn.querySelector('.theme-fab-label');
+      var saved = localStorage.getItem('reshii-theme') || localStorage.getItem('theme');
+      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.body.classList.add('dark-theme');
+      }
+      function sync() {
+        var isDark = document.body.classList.contains('dark-theme');
+        btn.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
+        label.textContent = isDark ? 'Light' : 'Dark';
+      }
+      btn.addEventListener('click', function () {
+        var isDark = document.body.classList.toggle('dark-theme');
+        localStorage.setItem('reshii-theme', isDark ? 'dark' : 'light');
+        sync();
+      });
+      sync();
+    })();
+  </script>
 </body>
 </html>

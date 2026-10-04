@@ -47,8 +47,6 @@
 <link rel="shortcut icon" href="/favicon.ico?v=12">
 <link rel="apple-touch-icon" sizes="512x512" href="/site-icon-round.png?v=12">
   
-  <!-- Adsterra Popunder -->
-  <script src="https://pimplehardnesscarnivorous.com/d3/b3/97/d3b3973434847969a57e5adbf501c98d.js"></script>
 
 <!-- Google Structured Data: Person + Website -->
   <script type="application/ld+json">
@@ -528,110 +526,99 @@
       min-width: 0;
     }
 
-    .link-stats {
-      margin-top: 4px;
-      font-size: 12px;
-      color: var(--text-secondary);
+    /* ---------- site navigation ---------- */
+    .site-nav {
       display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .link-stats .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 10px rgba(125, 211, 252, 0.75);
-      flex-shrink: 0;
-      animation: pulse-dot 2.2s ease-in-out infinite;
-    }
-
-    @keyframes pulse-dot {
-      0%, 100% {
-        opacity: 0.65;
-        transform: scale(0.95);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.3);
-      }
-    }
-
-    .live-counter-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 18px;
-      border-radius: var(--radius-full);
-      font-size: 12.5px;
-      color: var(--text-secondary);
-      margin-bottom: 22px;
-      animation: pop-in 0.6s 0.16s cubic-bezier(0.16, 1, 0.3, 1) both;
-      user-select: none;
-      letter-spacing: 0.01em;
-    }
-
-    .live-counter-badge strong {
-      color: var(--text-primary);
-      font-weight: 650;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .live-pulse-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.85);
-      animation: live-blink 1.8s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-
-    .ad-banner {
-      width: min(728px, calc(100vw - 40px));
-      min-height: 90px;
-      margin: 0 0 22px;
-      display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      overflow: hidden;
-      animation: pop-in 0.6s 0.14s cubic-bezier(0.16, 1, 0.3, 1) both;
+      gap: 4px;
+      padding: 8px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: 22px;
+      animation: pop-in 0.6s 0.12s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
-    @keyframes live-blink {
-      0%, 100% {
-        opacity: 0.5;
-        transform: scale(0.9);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.25);
-      }
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 550;
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      transition: background 0.25s, color 0.25s;
+      white-space: nowrap;
     }
 
-    .click-count-num {
-      font-variant-numeric: tabular-nums;
-      font-weight: 600;
+    .nav-link:hover {
+      background: var(--glass-fill-strong);
       color: var(--text-primary);
-      display: inline-block;
-      transition: transform 0.2s ease, color 0.2s ease;
     }
 
-    .count-bump {
-      animation: count-bump-anim 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      color: var(--accent) !important;
+    .nav-link.nav-active {
+      background: var(--glass-fill-strong);
+      color: var(--text-primary);
     }
 
-    @keyframes count-bump-anim {
-      0% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.3);
-      }
-      100% {
-        transform: scale(1);
-      }
+    /* ---------- explore cards (homepage content) ---------- */
+    .explore {
+      width: 100%;
+      margin-top: 24px;
+      animation: pop-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.62s both;
+    }
+
+    .explore-title {
+      font-size: 16px;
+      font-weight: 650;
+      margin: 0 0 4px;
+      text-align: center;
+    }
+
+    .explore-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin: 0 0 14px;
+      line-height: 1.5;
+    }
+
+    .explore-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .explore-card {
+      display: block;
+      padding: 14px 12px;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: transform 0.25s, background 0.25s;
+    }
+
+    .explore-card:hover {
+      background: var(--glass-fill-strong);
+      transform: translateY(-2px);
+    }
+
+    .explore-emoji {
+      font-size: 22px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .explore-card-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .explore-card-text {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      display: block;
+      line-height: 1.45;
     }
 
     .link-title {
@@ -805,6 +792,14 @@
 
   <div class="page">
 
+    <nav class="site-nav glass" aria-label="Site navigation">
+      <a href="/" class="nav-link nav-active">Home</a>
+      <a href="/about.html" class="nav-link">About</a>
+      <a href="/tutorials.html" class="nav-link">Tutorials</a>
+      <a href="/luts.html" class="nav-link">LUTs</a>
+      <a href="/blackmagic-cam.html" class="nav-link">Blackmagic Cam</a>
+    </nav>
+
     <button class="theme-toggle glass" id="themeToggle" type="button" aria-label="Switch to light theme"
       aria-pressed="false">
       <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
@@ -826,19 +821,6 @@
     <h1 class="name">༄ R E S H ! ! ! 🚫-</h1>
     <p class="username">@rashidkhanreshii</p>
     <p class="bio">All my download links, tutorials & socials — in one place ✨</p>
-
-    <div class="ad-banner" aria-label="Advertisement">
-      <script type="text/javascript">
-        atOptions = {
-          'key': '0ee3f807764854f304eb8c02a83f87bf',
-          'format': 'iframe',
-          'height': 90,
-          'width': 728,
-          'params': {}
-        };
-      </script>
-      <script type="text/javascript" src="//www.highperformanceformat.com/0ee3f807764854f304eb8c02a83f87bf/invoke.js"></script>
-    </div>
 
     <div class="socials" id="socials"></div>
 
@@ -866,6 +848,33 @@
       </div>
     </section>
 
+    <section class="explore" aria-labelledby="exploreHeading">
+      <h2 class="explore-title" id="exploreHeading">Explore the Site</h2>
+      <p class="explore-sub">Guides, resources, and free downloads for mobile filmmakers — everything on this site is written from real shooting and editing experience.</p>
+      <div class="explore-grid">
+        <a class="explore-card glass" href="/about.html">
+          <span class="explore-emoji">👋</span>
+          <span class="explore-card-title">About Me</span>
+          <span class="explore-card-text">Who I am, what I create, and why I share free editing resources.</span>
+        </a>
+        <a class="explore-card glass" href="/tutorials.html">
+          <span class="explore-emoji">🎬</span>
+          <span class="explore-card-title">Tutorials</span>
+          <span class="explore-card-text">Step-by-step video editing and shooting tutorials for beginners.</span>
+        </a>
+        <a class="explore-card glass" href="/luts.html">
+          <span class="explore-emoji">🎨</span>
+          <span class="explore-card-title">Free LUTs</span>
+          <span class="explore-card-text">What LUTs are, how to use them, and my free color grading pack.</span>
+        </a>
+        <a class="explore-card glass" href="/blackmagic-cam.html">
+          <span class="explore-emoji">📱</span>
+          <span class="explore-card-title">Blackmagic Cam</span>
+          <span class="explore-card-text">A practical guide to shooting cinematic video on your phone.</span>
+        </a>
+      </div>
+    </section>
+
     <footer>@rashidkhanreshii All Rights Reserved · <a href="/privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a></footer>
 
   </div>
@@ -889,194 +898,17 @@
       { title: "TikTok", sub: "Follow my page", emoji: "🎵", verified: false, url: "https://www.tiktok.com/@rashidkhanreshii?_r=1&_t=ZN-99Ytlh8edHy" }
     ];
 
-    // Default starting click count for the live counter
-    const DEFAULT_START_CLICKS = 13000;
-
-    // Historical total click storage keys ensuring counts survive republishing/redeployment
-    const PRIMARY_TOTAL_KEY = 'realLinkTotalClicks_v3';
-    const HISTORICAL_KEYS = [
-      'realLinkClickCounts_v2',
-      'realLinkClickCounts',
-      'realTotalClicks',
-      'totalLinkClicks',
-      'persistent_total_clicks_v3',
-      'real_clicks_total'
-    ];
-
-    const ICONS = {
-      instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>',
-      tiktok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82c-.9-.63-1.47-1.62-1.6-2.72h-2.98v13.3c0 1.4-1.13 2.53-2.53 2.53a2.53 2.53 0 0 1 0-5.06c.24 0 .47.03.69.1V10.9a5.53 5.53 0 0 0-.69-.04A5.53 5.53 0 1 0 15.02 16.4V9.28a6.6 6.6 0 0 0 3.9 1.26V7.56a3.9 3.9 0 0 1-2.32-1.74z"/></svg>',
-      mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>',
-      snapchat: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c3.3 0 5.2 2.2 5.3 5 0 .8 0 1.7-.05 2.4.3.15.7.2 1.1.15.5-.05.85.4.55.85-.3.45-1 .95-1 .95s.4.55.05.95c-.3.35-.9.4-1.15.55-.2.15-.15.6-.6.85-.5.3-1.35.1-1.9.35-.5.25-.7.85-1.5 1-.45.1-.9-.15-1.8-.15s-1.35.25-1.8.15c-.8-.15-1-.75-1.5-1-.55-.25-1.4-.05-1.9-.35-.45-.25-.4-.7-.6-.85-.25-.15-.85-.2-1.15-.55-.35-.4.05-.95.05-.95s-.7-.5-1-.95c-.3-.45.05-.9.55-.85.4.05.8 0 1.1-.15C6.7 9.7 6.7 8.8 6.7 8c.1-2.8 2-5 5.3-5z"/></svg>'
-    };
-
-    function formatNumber(val) {
-      const n = Number(val);
-      if (isNaN(n) || n < 0) return '13,000';
-      return Math.max(DEFAULT_START_CLICKS, n).toLocaleString();
-    }
-
-    // Recovers any genuine clicks recorded in history from prior sessions/keys
-    function getHistoricalTotalClicks() {
-      let highest = DEFAULT_START_CLICKS;
-
-      // Check direct total count values
-      const directKeys = [PRIMARY_TOTAL_KEY, ...HISTORICAL_KEYS];
-      for (const k of directKeys) {
-        try {
-          const val = Number(localStorage.getItem(k));
-          if (!isNaN(val) && val > highest) {
-            highest = val;
-          }
-        } catch (e) {}
-      }
-
-      // Check dictionary objects with per-link click counts
-      const mapKeys = ['realLinkClickCounts_v2', 'realLinkClickCounts', 'click_counts', 'link_clicks_history'];
-      for (const k of mapKeys) {
-        try {
-          const raw = localStorage.getItem(k);
-          if (raw) {
-            const parsed = JSON.parse(raw);
-            if (parsed && typeof parsed === 'object') {
-              const sum = Object.values(parsed).reduce((a, b) => a + (Number(b) || 0), 0);
-              if (sum > highest) {
-                highest = sum;
-              }
-            }
-          }
-        } catch (e) {}
-      }
-
-      return Math.max(DEFAULT_START_CLICKS, highest);
-    }
-
-    function saveLocalTotalClicks(val) {
-      try {
-        const count = Math.max(DEFAULT_START_CLICKS, Number(val) || DEFAULT_START_CLICKS);
-        localStorage.setItem(PRIMARY_TOTAL_KEY, String(count));
-        localStorage.setItem('realTotalClicks', String(count));
-      } catch (e) {}
-    }
-
-    // Initialize total click count from history immediately (starts at 13000 by default)
-    let totalClicks = Math.max(DEFAULT_START_CLICKS, getHistoricalTotalClicks());
-    let isFetching = false;
-
-    function updateDisplayCounts() {
-      const totalEl = document.getElementById('totalClicksDisplay');
-      if (totalEl) {
-        totalEl.textContent = formatNumber(totalClicks);
-      }
-    }
-
-    function triggerCountBump() {
-      const totalEl = document.getElementById('totalClicksDisplay');
-      if (totalEl) {
-        totalEl.classList.remove('count-bump');
-        void totalEl.offsetWidth; // force CSS reflow
-        totalEl.classList.add('count-bump');
-      }
-    }
-
-    async function syncHistoricalCountToServer(countToSync) {
-      const targetSync = Math.max(DEFAULT_START_CLICKS, countToSync || 0);
-      try {
-        const res = await fetch('/api/clicks/sync', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({ clientTotal: targetSync }),
-          keepalive: true
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && typeof data.total === 'number') {
-            totalClicks = Math.max(DEFAULT_START_CLICKS, totalClicks, data.total);
-            saveLocalTotalClicks(totalClicks);
-            updateDisplayCounts();
-          }
-        }
-      } catch (e) {}
-    }
-
-    async function fetchPublicClicks() {
-      if (isFetching) return;
-      isFetching = true;
-      try {
-        const localHighest = Math.max(DEFAULT_START_CLICKS, totalClicks, getHistoricalTotalClicks());
-        const res = await fetch('/api/clicks?clientHistoryTotal=' + encodeURIComponent(localHighest) + '&t=' + Date.now(), {
-          cache: 'no-store',
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && typeof data.total === 'number') {
-            const serverTotal = Math.max(DEFAULT_START_CLICKS, data.total);
-            if (serverTotal >= totalClicks) {
-              totalClicks = serverTotal;
-              saveLocalTotalClicks(totalClicks);
-              updateDisplayCounts();
-            } else if (totalClicks > serverTotal) {
-              // Server was freshly republished; restore server's counter from historical total
-              syncHistoricalCountToServer(totalClicks);
-            }
-          }
-        }
-      } catch (err) {
-        // Fall back gracefully to locally saved history
-      } finally {
-        isFetching = false;
-      }
-    }
+    // Simple, privacy-friendly click counter stored only in this visitor's browser.
+    // There is no server on this static site, so counts are per-device by design.
+    const CLICK_COUNT_KEY = 'reshii_link_clicks_v1';
 
     function recordClick(id) {
       if (!id) return;
-
-      // 1. Advance historical count locally immediately
-      const base = Math.max(DEFAULT_START_CLICKS, totalClicks, getHistoricalTotalClicks());
-      totalClicks = base + 1;
-      saveLocalTotalClicks(totalClicks);
-      updateDisplayCounts();
-      triggerCountBump();
-
-      // 2. Transmit to server reliably with keepalive: true (persists across navigation/tab switch)
-      const endpoint = '/api/clicks/' + encodeURIComponent(id);
-      const payload = JSON.stringify({ id, clientTotal: totalClicks, timestamp: Date.now() });
-
       try {
-        fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: payload,
-          keepalive: true
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (data && typeof data.total === 'number') {
-            totalClicks = Math.max(DEFAULT_START_CLICKS, totalClicks, data.total);
-            saveLocalTotalClicks(totalClicks);
-            updateDisplayCounts();
-          }
-        })
-        .catch(() => {
-          if (navigator.sendBeacon) {
-            try {
-              const blob = new Blob([payload], { type: 'application/json' });
-              navigator.sendBeacon(endpoint, blob);
-            } catch (e) {}
-          }
-        });
-      } catch (err) {
-        if (navigator.sendBeacon) {
-          try {
-            const blob = new Blob([payload], { type: 'application/json' });
-            navigator.sendBeacon(endpoint, blob);
-          } catch (e) {}
-        }
-      }
+        const counts = JSON.parse(localStorage.getItem(CLICK_COUNT_KEY) || '{}');
+        counts[id] = (counts[id] || 0) + 1;
+        localStorage.setItem(CLICK_COUNT_KEY, JSON.stringify(counts));
+      } catch (e) {}
     }
 
     function renderSocials() {
@@ -1146,7 +978,6 @@
     // Initial render
     renderSocials();
     renderLinks();
-    updateDisplayCounts();
     setupThemeToggle();
 
     // Domain consistency: adapt canonical and og:url if visited on rashidkhanreshii.ai.studio or rashidkhanreshii.com
@@ -1163,31 +994,7 @@
       }
     } catch (e) {}
 
-    // Fetch latest live clicks immediately from server
-    fetchPublicClicks();
-
-    // Cross-device live public sync: poll every 5 seconds when tab is active
-    setInterval(() => {
-      if (document.visibilityState === 'visible') {
-        fetchPublicClicks();
-      }
-    }, 5000);
-
-    // Refresh immediately when returning to tab or window from iPhone/Android/Desktop app
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') {
-        fetchPublicClicks();
-      }
-    });
-
-    window.addEventListener('focus', () => {
-      fetchPublicClicks();
-    });
-
   </script>
-
-  <!-- Adsterra Social Bar -->
-  <script src="https://pimplehardnesscarnivorous.com/8f/e5/8f/8fe58f5635f32a9918ed6b08e263746f.js"></script>
 
 </body>
 
